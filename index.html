@@ -10,19 +10,6 @@
 </head>
 <body>
 	<div ng-app="myApp">
-		<div ng-controller="ParentController">
-			<p>We can access: {{ rootProperty }}
-				and {{ parentProperty }}</p>
-				<div ng-controller="ChildController">
-					<p>
-						We can access:
-						{{ rootProperty }} and
-						{{ parentProperty }} and
-						{{ childProperty }}
-					</p>
-					<p>{{ fullSentenceFromChild }}</p>
-				</div>
-			</div>
-		</div>
+	<div my-directive some-attr="//81222.com" my-link-text="my test text"></div>
 	</body>
 	</html>
