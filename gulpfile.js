@@ -16,7 +16,7 @@ var allFiles = jsFiles.concat(cssFiles).concat(coffeeFiles).concat(htmlFiles);
 
 gulp.task('cleanScripts', function() {
 	console.log('clear scripts firstly');
-	gulp.src(['build/**/*.js', '!build/vender/*.*'], {
+	gulp.src(['build/**/*.js', '!build/js/vender/*.*'], {
 			read: false
 		})
 		.pipe(clean());

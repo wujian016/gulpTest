@@ -1,9 +1,14 @@
-angular.module('myApp', []).directive('myBetterVideo',->
-  return {
-	   restrict:'AECM'
-	   replace:true
-	   template:'<a href="http://81222.com">Click me to go to 81222.com</a>'
-   }
+angular.module('myApp', [])
+.run ($rootScope)->
+  $rootScope.rootProperty = 'root scope'
+.controller('ParentController',($scope)->
+  $scope.parentProperty = 'parent scope')
+.controller('ChildController',($scope)->
+    $scope.childProperty = 'child scope'
+    $scope.fullSentenceFromChild = 'Same $scope: We can access: ' +
+     $scope.rootProperty + ' and ' +
+     $scope.parentProperty + ' and ' +
+     $scope.childProperty
 ) 
  
 	
