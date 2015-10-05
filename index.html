@@ -1,47 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<html ng-app="myApp">
 	<head>
 		<meta charset="UTF-8">
 		<title>Document</title>
 		<link rel="stylesheet" href="/build/css/main.css">
 		<script src="/build/js/vender/angular.js"></script>
-		<script src="/build/js/vender/angular-messages.js"></script>
 		<!--<script src="/build/js/app.js"></script>-->
 		<script src="/build/js/main.js"></script>
-		<style href="http://cdn.jsdelivr.net/foundation/4.3.2/css/foundation.min.css"></style>
-		<style>
-			input.ng-invalid {
-				border: 1px solid red;
-			}
-			input.ng-valid {
-				border: 1px solid green;
-			}
-		</style>
 	</head>
 	<body>
-		<div ng-app="myApp">
-			<div>
-				<form name="signup_form" novalidate ng-submit="signupForm()" ng-controller="signupController">
-					<fieldset>
-						<legend>Signup</legend>
-						<div class="row">
-							<div class="large-12 columns">
-								<label>Your name</label>
-								<input type="text"
-								placeholder="Name"
-								name="name"
-								ng-model="signup.name"
-								ng-minlength="3"
-								ng-maxlength="20" required/>
-								<div class="error" ng-messages="signup_form.name.$error">
-								<div ng-messages-include="templates/errors.html">
-								</div> 
-								</div>
-							</div>
-						</div>
-						<button type="submit" ng-disabled="signup_form.$invalid" class="button radius">Submit</button>
-					</fieldset>
-				</form>
+		<div ng-controller="EmailController">
+			<input type="text" ng-model="to"/>
+			<div nw-emailer ng-model="to"
+				on-send="sendMail(email)"
+				from-name="ari@fullstack.io" />
 			</div>
 		</body>
 	</html>
