@@ -16,7 +16,7 @@ var allFiles = jsFiles.concat(cssFiles).concat(coffeeFiles).concat(htmlFiles);
 
 gulp.task('cleanScripts', function() {
 	console.log('clear scripts firstly');
-	gulp.src(['build/**/*.js', '!build/vender/**/*.js'], {
+	gulp.src(['build/**/*.js', '!build/vender/*.*'], {
 			read: false
 		})
 		.pipe(clean());
@@ -64,7 +64,7 @@ gulp.task('bowerMain', function() {
 });
 
 gulp.task('default', function() {
-	runSequence('cleanScripts','bowerMain', ['browserFiles', 'mergeScripts', 'coffeeScripts']);
+	runSequence('cleanScripts','bowerMain','coffeeScripts','mergeScripts','browserFiles');
 });
 
 // var Q = require('q');
@@ -92,7 +92,7 @@ gulp.task('server-reload', function() {
 
 
 gulp.task('reload-all', function(cb) {
-	runSequence('mergeScripts', 'coffeeScripts', 'server-reload', 'bowerMain', cb);
+	runSequence('mergeScripts', 'coffeeScripts', 'server-reload', cb);
 	//  function() {
 	// 	console.log('sequence 3');
 	// }
