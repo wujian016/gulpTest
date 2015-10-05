@@ -10,6 +10,12 @@
 </head>
 <body>
 	<div ng-app="myApp">
-	<div my-directive some-attr="//81222.com" my-link-text="my test text"></div>
+		
+		<div ng-controller="MyController">
+			<input ng-model="expr"
+			type="text"
+			placeholder="Enter an expression" />
+			<h2>{{ parseValue }}</h2>
+		</div>
 	</body>
 	</html>
