@@ -7,15 +7,41 @@
 	<script src="/build/js/vender/angular.js"></script>
 	<!--<script src="/build/js/app.js"></script>-->
 	<script src="/build/js/main.js"></script>
+	<style>
+		input.ng-invalid {
+			border: 1px solid red;
+		}
+		input.ng-valid {
+			border: 1px solid green;
+		}
+	</style>
+}
 </head>
 <body>
 	<div ng-app="myApp">
-
 		<div>
-			<input ng-model="expr"
-			type="text"
-			placeholder="Enter an expression" />
-			<h2>{{ "ginger Loves Dog treats" | lowercase | capitalize }}</h2>
+			<form name="Myform" ng-controller="MyController" novalidate>
+				<label for="email">Your email</label>
+				<input type="email" id="email"
+				name="email"
+				ng-model="email" placeholder="Email Address" />
+
+				<label for="fullname">Your name</label>
+				<input type="text"
+				name="fullname" id="fullname"
+				ng-model="fullname" placeholder="Your fullname" required ng-minlength="5" ng-maxlength="8"/>
+
+				<label for="address">Your address</label>
+				<input type="text" id="address" ng-model="address" placeholder="Your address" name="address" ng-pattern="/^[a-zA-Z]+$/"/>
+
+				<label for="year">Your year</label>
+				<input type="number" id="year" ng-model="user.year" placeholder="Your year" name="year"/>
+
+				<label for="homepage">Your homepage</label>
+				<input type="url" id="homepage" ng-model="user.homepage" placeholder="Your homepage" name="homepage"/>
+
+				<button  ng-click="show()">show</button>
+			</form>
 		</div>
 	</body>
 	</html>
