@@ -10,12 +10,12 @@
 </head>
 <body>
 	<div ng-app="myApp">
-		
-		<div ng-controller="MyController">
+
+		<div>
 			<input ng-model="expr"
 			type="text"
 			placeholder="Enter an expression" />
-			<h2>{{ parseValue }}</h2>
+			<h2>{{ "ginger Loves Dog treats" | lowercase | capitalize }}</h2>
 		</div>
 	</body>
 	</html>
