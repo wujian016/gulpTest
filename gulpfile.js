@@ -39,7 +39,7 @@ gulp.task('coffeeScripts', function() {
 		//.pipe(sourcemaps.init())
 		.pipe(coffee({
 			bare: true
-		}))
+		})).on('error', gutil.log)
 		//.pipe(sourcemaps.write({addComment: false}))
 		// .pipe(coffee({
 		// 	bare: true
