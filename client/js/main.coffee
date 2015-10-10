@@ -1,24 +1,22 @@
-angular.module('myApp', []) 
-.controller('MyController', ($scope)->
-		$scope.show = ->
-				console.log $scope.Myform.email.$$rawModelValue
-).filter('capitalize',->
-		return (input)->
-				input[0].toUpperCase() + input.slice(1) if input?
-).directive('oneToTen',($filter)->
-	require:'?ngModel'
-	link:(scope, ele, attrs, ngModel)->
-		if ngModel?
-			ngModel.$parsers.unshift	(viewValue)-> 
-				i = parseInt viewValue
-				if 0 <= i < 10
-					ngModel.$setValidity 'oneToTen', true
-					return viewValue
-				else
-					ngModel.$setValidity 'oneToTen', false
-					return undefined
-			ngModel.$formatters.unshift (v=0)->
-					return $filter('number')(v)
-)
- 
-		
+angular.module('myApp', [])
+.$controller('signupController',['$http',($http)->
+	$scope.submitted = false
+	$scope.signupForm = ->
+		if $scope.signup_form.$valid isnt true
+			 $scope.signup_form.submitted = true
+])
+.directive('ensureUnique', ['$http', ($http)->
+	require: 'ngModel'
+	link: (scope, ele, attrs, c)->
+		scope.$watch(attrs.ngModel, ()->
+			$http({
+				method: 'POST'
+				url: '/api/check/' + attrs.ensureUnique
+				data: {'field': attrs.ensureUnique}
+				}).success((data, status, headers, cfg)->
+					c.$setValidity('unique', data.isUnique)
+				).error((data, status, headers, cfg)->
+						c.$setValidity('unique', false)
+				)
+			)
+])
