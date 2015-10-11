@@ -1,8 +1,9 @@
-angular.module('myApp', [])
-.$controller('signupController',['$http',($http)->
+angular.module('myApp', ['ngMessages'])
+.controller('signupController',['$http','$scope','$rootScope',($http,$scope,$rootScope)->
+	$rootScope.testFiled = "wujian"
 	$scope.submitted = false
 	$scope.signupForm = ->
-		if $scope.signup_form.$valid isnt true
+		if $scope.signup_form.$valid is true
 			 $scope.signup_form.submitted = true
 ])
 .directive('ensureUnique', ['$http', ($http)->
