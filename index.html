@@ -4,6 +4,7 @@
 		<title>Document</title>
 		<link rel="stylesheet" href="/build/css/main.css">
 		<script src="/build/js/vender/angular.js"></script>
+		<script src="/build/js/vender/angular-route.js"></script>
 		<!--<script src="/build/js/app.js"></script>-->
 		<script src="/build/js/main.js"></script>
 	</head>
@@ -15,5 +16,9 @@
 		ng-minlength="3"
 		ng-maxlength="20"
 		ensure-unique="username" required />
+
+		<div ng-controller="myControle">
+			<button ng-click="test()">show alert</button>
+		</div>
 	</body>
 </html>
