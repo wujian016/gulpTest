@@ -64,7 +64,7 @@ angular.module('myApp', ['ngRoute'])
 ).controller('UserCtrl',($scope,UserService)->
 	UserService.setUser('i love you')
 	$scope.alert = ()-> alert UserService.getUser()
-).factory('githubService', ($http)->
+).service('githubService', ($http)->
 	githubUrl = 'https://api.github.com'
 	githubUsername = null
 	runUserRequest = (username, path)->
@@ -74,14 +74,13 @@ angular.module('myApp', ['ngRoute'])
 			username + '/' +
 			path + '?callback=JSON_CALLBACK'
 		)
-	return {
-		events: (username)-> 
-			return runUserRequest(username, 'events')
-		setUsername:(username)->
-			githubUsername = username
-		getUsername:()->
-			return githubUsername
-	}
+	this.events = (username)-> 
+		return runUserRequest(username, 'events')
+	this.setUsername = (username)->
+		githubUsername = username
+	this.getUsername = ()->
+		return githubUsername
+	return
 ).controller('ServiceController',($scope,$timeout,githubService)->
 	##$scope.events = githubService.events('auser')
 	timeout = null
