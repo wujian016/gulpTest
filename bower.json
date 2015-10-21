@@ -23,6 +23,7 @@
     "angular": "angularjs#~1.4.7",
     "angular-messages": "~1.4.7",
     "angular-route": "~1.4.7",
+    "angular-scenario": "~1.4.7",
     "jquery": "~2.1.4",
     "requirejs": "~2.1.20"
   }
