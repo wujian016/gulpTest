@@ -64,4 +64,39 @@ angular.module('myApp', ['ngRoute'])
 ).controller('UserCtrl',($scope,UserService)->
 	UserService.setUser('i love you')
 	$scope.alert = ()-> alert UserService.getUser()
+).factory('githubService', ($http)->
+	githubUrl = 'https://api.github.com'
+	githubUsername = null
+	runUserRequest = (username, path)->
+		return $http(
+			method: 'JSONP',
+			url: githubUrl + '/users/' +
+			username + '/' +
+			path + '?callback=JSON_CALLBACK'
+		)
+	return {
+		events: (username)-> 
+			return runUserRequest(username, 'events')
+		setUsername:(username)->
+			githubUsername = username
+		getUsername:()->
+			return githubUsername
+	}
+).controller('ServiceController',($scope,$timeout,githubService)->
+	##$scope.events = githubService.events('auser')
+	timeout = null
+	$scope.$watch('username', (newUsername)->
+		if timeout
+			$timeout.cancel(timeout)
+		timeout = $timeout(()->
+			githubService.events(newUsername)
+			.success((data, status, headers)->
+				$scope.events = data.data
+				githubService.setUsername(newUsername)
+			)
+		,350)
+	)
+	$scope.getUsername = ()->
+	 $scope.localUsername = githubService.getUsername()
+	##$scope.setUsername = githubService.setUsername
 )
