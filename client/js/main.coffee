@@ -66,19 +66,18 @@ angular.module('myApp', ['ngRoute'])
 	UserService.setUser('i love you')
 	$scope.alert = ()-> alert UserService.getUser()
 ).provider('githubService', ()->
-	@githubUrl= 'https://github.com'
-	@githubUsername = null
-	@setGithubUrl=(url)->
-		if url then @githubUrl = url
-	@method='JSONP'
-	@$get=($http)->
+	githubUrl= 'https://github.com'
+	githubUsername = null
+	setGithubUrl:(url)->
+		if url then githubUrl = url
+	method:'JSONP'
+	$get:($http)->
 		self = this
 		return {
-			events:(username)-> $http({ method: self.method, url: self.githubUrl+'/users/'+username+'/events'+'?callback=JSON_CALLBACK'})
+			events:(username)-> $http({ method: self.method, url: githubUrl+'/users/'+username+'/events'+'?callback=JSON_CALLBACK'})
 			setUsername:(username)->githubUsername=username
 			getUsername:()->return githubUsername
-		}
-	return
+		} 
 ).controller('ServiceController',($scope,$timeout,githubService)->
 	##$scope.events = githubService.events('auser')
 	timeout = null
