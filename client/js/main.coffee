@@ -1,6 +1,6 @@
 angular.module('myApp', ['ngRoute'])
-.constant('apiKey','13408630892')
-.config(($routeProvider,$locationProvider,githubServiceProvider,apiKey)->
+.value('myname','wujian')
+.config(($routeProvider,$locationProvider,githubServiceProvider)->
 	$routeProvider.when('/',{
 		controller: 'WelcomeController',
 		templateUrl: 'views/welcome.html'
@@ -15,7 +15,7 @@ angular.module('myApp', ['ngRoute'])
 	})
 	$locationProvider.html5Mode(false)
 	$locationProvider.hashPrefix('!')
-	githubServiceProvider.setGithubUrl('https://api.github.com'+'/'+apiKey)
+	githubServiceProvider.setGithubUrl('https://api.github.com')
 ).config((ConnectionProvider)-> 
 	ConnectionProvider.setApiKey('SOME_API_KEY')
 ).run(($rootScope,$location)->
@@ -79,7 +79,7 @@ angular.module('myApp', ['ngRoute'])
 			setUsername:(username)->githubUsername=username
 			getUsername:()->return githubUsername
 		} 
-).controller('ServiceController',($scope,$timeout,githubService)->
+).controller('ServiceController',($scope,$timeout,githubService,myname)->
 	##$scope.events = githubService.events('auser')
 	timeout = null
 	$scope.$watch('username', (newUsername)->
@@ -94,6 +94,6 @@ angular.module('myApp', ['ngRoute'])
 		,350)
 	)
 	$scope.getUsername = ()->
-	 $scope.localUsername = githubService.getUsername()
+	 $scope.localUsername = githubService.getUsername()+myname
 	##$scope.setUsername = githubService.setUsername
 )
