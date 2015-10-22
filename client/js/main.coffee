@@ -1,5 +1,6 @@
 angular.module('myApp', ['ngRoute'])
-.config(($routeProvider,$locationProvider,githubServiceProvider)->
+.constant('apiKey','13408630892')
+.config(($routeProvider,$locationProvider,githubServiceProvider,apiKey)->
 	$routeProvider.when('/',{
 		controller: 'WelcomeController',
 		templateUrl: 'views/welcome.html'
@@ -14,7 +15,7 @@ angular.module('myApp', ['ngRoute'])
 	})
 	$locationProvider.html5Mode(false)
 	$locationProvider.hashPrefix('!')
-	githubServiceProvider.setGithubUrl('https://api.github.com')
+	githubServiceProvider.setGithubUrl('https://api.github.com'+'/'+apiKey)
 ).config((ConnectionProvider)-> 
 	ConnectionProvider.setApiKey('SOME_API_KEY')
 ).run(($rootScope,$location)->
