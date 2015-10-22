@@ -1,5 +1,5 @@
 angular.module('myApp', ['ngRoute'])
-.config(($routeProvider,$locationProvider)->
+.config(($routeProvider,$locationProvider,githubServiceProvider)->
 	$routeProvider.when('/',{
 		controller: 'WelcomeController',
 		templateUrl: 'views/welcome.html'
@@ -14,6 +14,7 @@ angular.module('myApp', ['ngRoute'])
 	})
 	$locationProvider.html5Mode(false)
 	$locationProvider.hashPrefix('!')
+	githubServiceProvider.setGithubUrl('https://api.github.com')
 ).config((ConnectionProvider)-> 
 	ConnectionProvider.setApiKey('SOME_API_KEY')
 ).run(($rootScope,$location)->
@@ -64,22 +65,19 @@ angular.module('myApp', ['ngRoute'])
 ).controller('UserCtrl',($scope,UserService)->
 	UserService.setUser('i love you')
 	$scope.alert = ()-> alert UserService.getUser()
-).service('githubService', ($http)->
-	githubUrl = 'https://api.github.com'
-	githubUsername = null
-	runUserRequest = (username, path)->
-		return $http(
-			method: 'JSONP',
-			url: githubUrl + '/users/' +
-			username + '/' +
-			path + '?callback=JSON_CALLBACK'
-		)
-	this.events = (username)-> 
-		return runUserRequest(username, 'events')
-	this.setUsername = (username)->
-		githubUsername = username
-	this.getUsername = ()->
-		return githubUsername
+).provider('githubService', ()->
+	@githubUrl= 'https://github.com'
+	@githubUsername = null
+	@setGithubUrl=(url)->
+		if url then @githubUrl = url
+	@method='JSONP'
+	@$get=($http)->
+		self = this
+		return {
+			events:(username)-> $http({ method: self.method, url: self.githubUrl+'/users/'+username+'/events'+'?callback=JSON_CALLBACK'})
+			setUsername:(username)->githubUsername=username
+			getUsername:()->return githubUsername
+		}
 	return
 ).controller('ServiceController',($scope,$timeout,githubService)->
 	##$scope.events = githubService.events('auser')
