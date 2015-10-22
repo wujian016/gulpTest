@@ -1,6 +1,6 @@
 angular.module('myApp', ['ngRoute'])
 .value('myname','wujian')
-.config(($routeProvider,$locationProvider,githubServiceProvider)->
+.config(($provide,$routeProvider,$locationProvider,githubServiceProvider)->
 	$routeProvider.when('/',{
 		controller: 'WelcomeController',
 		templateUrl: 'views/welcome.html'
@@ -16,6 +16,20 @@ angular.module('myApp', ['ngRoute'])
 	$locationProvider.html5Mode(false)
 	$locationProvider.hashPrefix('!')
 	githubServiceProvider.setGithubUrl('https://api.github.com')
+	$provide.decorator('githubService',($delegate,$log)->
+		events = (path)->
+			startedAt = new Date();
+			events = $delegate.events(path)
+			$log.info startedAt.toString()
+			$log.info("Fetching events"+" took " +
+				(new Date() - startedAt) + "ms")
+			return events
+		return {
+			events: events
+			setUsername:(unsername)-> $delegate.setUsername(unsername)
+			getUsername:$delegate.getUsername()
+		}
+	)
 ).config((ConnectionProvider)-> 
 	ConnectionProvider.setApiKey('SOME_API_KEY')
 ).run(($rootScope,$location)->
