@@ -1,6 +1,6 @@
 angular.module('myApp', ['ngRoute'])
 .value('myname','wujian')
-.config(($provide,$routeProvider,$locationProvider,githubServiceProvider)->
+.config(($provide,$httpProvider,$routeProvider,$locationProvider,githubServiceProvider)->
 	$routeProvider.when('/',{
 		controller: 'WelcomeController',
 		templateUrl: 'views/welcome.html'
@@ -13,6 +13,8 @@ angular.module('myApp', ['ngRoute'])
 	}).otherwise({
 		redirectTo: '/'
 	})
+	$httpProvider.defaults.headers.common['X-Auth'] = 'RandomString'
+	##$httpProvider.defaults.headers.get['X-Requested-By'] = 'mammad'
 	$locationProvider.html5Mode(false)
 	$locationProvider.hashPrefix('!')
 	githubServiceProvider.setGithubUrl('https://api.github.com')
@@ -89,7 +91,8 @@ angular.module('myApp', ['ngRoute'])
 	$get:($http)->
 		self = this
 		return {
-			events:(username)-> $http({ method: self.method, url: githubUrl+'/users/'+username+'/events'+'?callback=JSON_CALLBACK'})
+			events:(username)-> 
+				$http({ method: self.method, url: githubUrl+'/users/'+username+'/events'+'?callback=JSON_CALLBACK'})
 			setUsername:(username)->githubUsername=username
 			getUsername:()->return githubUsername
 		} 
