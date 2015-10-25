@@ -5,12 +5,9 @@
 		<link rel="stylesheet" href="/build/css/main.css">
 		<base href="/">
 		<script src="/build/js/vender/angular.js"></script>
-		<script src="/build/js/vender/angular-route.js"></script>
-		<script src="/build/js/vender/angular-route.js"></script>
-		<script src="/build/js/vender/angular-route.js"></script>
-		<!--<script src="/build/js/app.js"></script>-->
-		<script src="app/lib/angular/angular-scenario.js" ng-autotest></script>
-		<script src="/build/js/main.js"></script>
+		<script src="/build/js/vender/angular-route.js"></script> 
+		<script src="/build/js/vender/angular-resource.js"></script> 
+		<script src="/build/js/app.js"></script>
 	</head>
 	<body>
 		<header>
@@ -24,13 +21,7 @@
 			ng-model="username"
 			placeholder="Enter a GitHub username" />
 			<ul>
-				<li ng-repeat="event in events">
-					<!--
-					event.actor and event.repo are returned
-					by the github API. To view the raw
-					API, uncomment the next line:
-					-->
-					<!-- {{ event | json }} -->
+				<li ng-repeat="event in events"> 
 					{{ event.actor.login }} {{ event.repo.name }}
 				</li>
 			</ul>
